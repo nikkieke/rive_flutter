@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rive/rive.dart';
+import 'package:rive_flutter/screens/pull_to_refresh/rive_header.dart';
 
 class PullToRefreshScreen extends StatefulWidget {
   const PullToRefreshScreen({Key? key}) : super(key: key);
@@ -13,14 +14,6 @@ class PullToRefreshScreen extends StatefulWidget {
 class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
   final RefreshController refreshController = RefreshController();
 
-  /// rive controller and input values
-  StateMachineController? controller;
-
-  SMIInput<double>? pull;
-  SMIInput<bool>? advance;
-
-  final double scrollValue = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +21,10 @@ class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
       body: SmartRefresher(
         controller: refreshController,
         enablePullDown: true,
-        // header: SliverToBoxAdapter(
-        //     child: SizedBox(
-        //       height: pull?.value == 0.0? 0: scrollValue,
-        //       child: RiveAnimation.asset('assets/rive_assets/pullToRefresh.riv',
-        //         fit: BoxFit.cover,
-        //         stateMachines: const ["numberSimulation"],
-        //         onInit: (artboard) {
-        //           controller = StateMachineController.fromArtboard(
-        //             artboard,
-        //             "numberSimulation",
-        //           );
-        //           if (controller == null) return;
-        //           artboard.addController(controller!);
-        //           pull = controller?.findInput("pull");
-        //           advance = controller?.findInput("advance");
-        //         },
-        //       ),
-        //     ),
-        //
-        // ),
+        header: const RiveHeader(),
         onRefresh: () async {
           await Future.delayed(
-              const Duration(seconds: 2),(){
+              const Duration(seconds: 5),(){
           });
           refreshController.refreshCompleted();
         },
