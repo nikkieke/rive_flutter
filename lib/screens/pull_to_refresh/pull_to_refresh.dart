@@ -12,6 +12,12 @@ class PullToRefreshScreen extends StatefulWidget {
 class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
   final RefreshController refreshController = RefreshController();
 
+  @override
+  void dispose() {
+    refreshController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,7 @@ class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
 
   List<Widget> buildList() {
     return List.generate(
-        15,
+        13,
             (index) => Container(
           height: 100,
           margin: const EdgeInsets.symmetric(

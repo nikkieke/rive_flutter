@@ -20,16 +20,27 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
 
   RiveFile? riveFile;
 
+  double kTriggerOffset = 200.0;
+
   double kOffset = 0;
 
   @override
   void initState() {
-    super.initState();
     loadRiveFile();
-    widget.refreshController.headerMode?.addListener(() => onModeChange);
+    widget.refreshController.headerMode?.addListener(() {
+      if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
+        controller?.isActive = true;
+      } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
+        advance?.change(true);
+      } else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
+        advance?.change(true);
+      }
+    });
+    super.initState();
   }
 
-  void onModeChange (RefreshStatus mode){
+  void onModeChange (RefreshStatus mode)async{
+    print('here2');
     if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
       controller?.isActive = true;
     } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
@@ -57,12 +68,12 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   Widget build(BuildContext context) {
     return CustomHeader(
       completeDuration: const Duration(seconds: 1),
-      height: 200,
+      height: kTriggerOffset,
       refreshStyle: RefreshStyle.Behind,
       onOffsetChange: (offset) {
         if (widget.refreshController.headerMode?.value != RefreshStatus.refreshing){
           kOffset = offset;
-          final percentage = (offset / 200).clamp(0.0, 1.1) * 100;
+          final percentage = (offset / kTriggerOffset).clamp(0.0, 1.1) * 100;
           pull?.value = percentage;
         }
       },
