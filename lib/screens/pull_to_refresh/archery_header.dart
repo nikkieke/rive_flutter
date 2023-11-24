@@ -24,23 +24,18 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
 
   double kOffset = 0;
 
+  RefreshStatus mode = RefreshStatus.idle;
+
   @override
   void initState() {
     loadRiveFile();
     widget.refreshController.headerMode?.addListener(() {
-      if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
-        controller?.isActive = true;
-      } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
-        advance?.change(true);
-      } else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
-        advance?.change(true);
-      }
+      onModeChange(mode);
     });
     super.initState();
   }
 
   void onModeChange (RefreshStatus mode)async{
-    print('here2');
     if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
       controller?.isActive = true;
     } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
@@ -61,7 +56,7 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   @override
   void dispose() {
     controller?.dispose();
-    widget.refreshController.headerMode?.removeListener(() => onModeChange);
+    widget.refreshController.headerMode?.removeListener(() => onModeChange(mode));
     super.dispose();
   }
   @override
