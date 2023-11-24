@@ -1,20 +1,52 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rive/rive.dart';
 
-class ArcheryHeader extends StatefulWidget {
-  const ArcheryHeader({Key? key, required this.refreshController}) : super(key: key);
-  final RefreshController refreshController;
+const double kTriggerOffset = 200.0;
+
+class ArcheryHeader extends Header {
+  const ArcheryHeader({
+    super.clamping = false,
+    super.triggerOffset = kTriggerOffset,
+    super.position = IndicatorPosition.above,
+    super.processedDuration = Duration.zero,
+    super.springRebound = false,
+    super.hapticFeedback = false,
+    super.safeArea = false,
+    super.spring,
+    super.readySpringBuilder,
+    super.frictionFactor,
+    super.infiniteOffset,
+    super.hitOver,
+    super.infiniteHitOver,
+  });
 
   @override
-  State<ArcheryHeader> createState() => _ArcheryHeaderState();
+  Widget build(BuildContext context, IndicatorState state) {
+    return ArcheryIndicator(
+      state: state,
+      reverse: state.reverse,
+    );
+  }
+}
+class ArcheryIndicator extends StatefulWidget {
+  const ArcheryIndicator({Key? key, required this.state, required this.reverse,}) : super(key: key);
+
+  final IndicatorState state;
+  final bool reverse;
+
+  @override
+  State<ArcheryIndicator> createState() => _ArcheryIndicatorState();
 }
 
-class _ArcheryHeaderState extends State<ArcheryHeader> {
+class _ArcheryIndicatorState extends State<ArcheryIndicator> {
+  double get _offset => widget.state.offset;
+  IndicatorMode get _mode => widget.state.mode;
+  double get _actualTriggerOffset => widget.state.actualTriggerOffset;
+
   /// rive controller and input values
   StateMachineController? controller;
-
   SMINumber? pull;
   SMITrigger? advance;
 
@@ -22,26 +54,27 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
 
   double kTriggerOffset = 200.0;
 
-  double kOffset = 0;
-
-  RefreshStatus mode = RefreshStatus.idle;
 
   @override
   void initState() {
     loadRiveFile();
-    widget.refreshController.headerMode?.addListener(() {
-      onModeChange(mode);
+    widget.state.notifier.addListener(() {
+      onModeChange(_mode, _offset);
     });
     super.initState();
   }
 
-  void onModeChange (RefreshStatus mode)async{
-    print(widget.refreshController.headerStatus);
-    if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
-      advance?.fire();
-    }
-    else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
-        advance?.fire();
+  void onModeChange(IndicatorMode mode, double offset) {
+    //print(mode);
+    switch (mode) {
+      case IndicatorMode.drag:
+        controller?.isActive = true;
+      case IndicatorMode.ready:
+        advance?.change(true);
+      case IndicatorMode.processing:
+        advance?.change(true);
+      default:
+        break;
     }
   }
 
@@ -56,27 +89,21 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   @override
   void dispose() {
     controller?.dispose();
-    widget.refreshController.headerMode?.removeListener(() => onModeChange(mode));
+    widget.state.notifier.removeListener(() {
+      onModeChange(_mode, _offset);
+    });
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
-    return CustomHeader(
-      completeDuration: const Duration(seconds: 1),
-      height: kTriggerOffset,
-      refreshStyle: RefreshStyle.Behind,
-      onOffsetChange: (offset) {
-        if (widget.refreshController.headerMode?.value != RefreshStatus.refreshing){
-          kOffset = offset;
-          final percentage = (offset / kTriggerOffset).clamp(0.0, 1.1) * 100;
-          pull?.value = percentage;
-        }
-      },
-      builder: (BuildContext context, RefreshStatus? mode) {
-        return SizedBox(
-            height: kOffset,
+    if (_mode == IndicatorMode.drag || _mode == IndicatorMode.armed) {
+      final percentage = (_offset / _actualTriggerOffset).clamp(0.0, 1.1) * 100;
+      pull?.value = percentage;
+    }
+    return SizedBox(
+            height: _offset,
             width: double.maxFinite,
-            child: (kOffset > 1 && riveFile != null)?
+            child: (_offset > 1 && riveFile != null)?
             RiveAnimation.direct(
               riveFile!,
               fit: BoxFit.cover,
@@ -95,8 +122,6 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
               },
             ): const SizedBox.shrink()
         );
-      },
-    );
   }
 }
 
