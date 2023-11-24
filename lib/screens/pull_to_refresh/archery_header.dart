@@ -36,11 +36,10 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   }
 
   void onModeChange (RefreshStatus mode)async{
-    if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
-      controller?.isActive = true;
-    } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
+    if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
       advance?.change(true);
-    } else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
+    } else
+      if (widget.refreshController.headerStatus == RefreshStatus.completed) {
       advance?.change(true);
     }
   }
