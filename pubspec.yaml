@@ -13,6 +13,7 @@ dependencies:
   rive: ^0.12.3
   pull_to_refresh: ^2.0.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rive/rive.dart';
-import 'package:rive_flutter/screens/pull_to_refresh/rive_header.dart';
+import 'package:rive_flutter/screens/pull_to_refresh/archery_header.dart';
 
 class PullToRefreshScreen extends StatefulWidget {
   const PullToRefreshScreen({Key? key}) : super(key: key);
@@ -21,15 +19,22 @@ class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
       body: SmartRefresher(
         controller: refreshController,
         enablePullDown: true,
-        header: const RiveHeader(),
+        header: ArcheryHeader(refreshController: refreshController),
         onRefresh: () async {
           await Future.delayed(
-              const Duration(seconds: 5),(){
+              const Duration(seconds: 2),(){
           });
+          if (!mounted) {
+            return;
+          }
           refreshController.refreshCompleted();
         },
         child: CustomScrollView(
           slivers: [
+            const SliverAppBar(
+              title: Text('Shooting practice'),
+              pinned: true,
+            ),
             SliverList(delegate: SliverChildListDelegate(buildList()))
           ],
         ),
