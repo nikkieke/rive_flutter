@@ -15,8 +15,8 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   /// rive controller and input values
   StateMachineController? controller;
 
-  SMIInput<double>? pull;
-  SMIInput<bool>? advance;
+  SMINumber? pull;
+  SMITrigger? advance;
 
   RiveFile? riveFile;
 
@@ -24,29 +24,24 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
 
   double kOffset = 0;
 
+  RefreshStatus mode = RefreshStatus.idle;
+
   @override
   void initState() {
     loadRiveFile();
     widget.refreshController.headerMode?.addListener(() {
-      if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
-        controller?.isActive = true;
-      } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
-        advance?.change(true);
-      } else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
-        advance?.change(true);
-      }
+      onModeChange(mode);
     });
     super.initState();
   }
 
   void onModeChange (RefreshStatus mode)async{
-    print('here2');
-    if(widget.refreshController.headerStatus == RefreshStatus.canRefresh){
-      controller?.isActive = true;
-    } else if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
-      advance?.change(true);
-    } else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
-      advance?.change(true);
+    print(widget.refreshController.headerStatus);
+    if (widget.refreshController.headerStatus == RefreshStatus.refreshing) {
+      advance?.fire();
+    }
+    else if (widget.refreshController.headerStatus == RefreshStatus.completed) {
+        advance?.fire();
     }
   }
 
@@ -61,7 +56,7 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
   @override
   void dispose() {
     controller?.dispose();
-    widget.refreshController.headerMode?.removeListener(() => onModeChange);
+    widget.refreshController.headerMode?.removeListener(() => onModeChange(mode));
     super.dispose();
   }
   @override
@@ -95,8 +90,8 @@ class _ArcheryHeaderState extends State<ArcheryHeader> {
                 controller?.isActive = false;
                 if (controller == null) return;
                 artboard.addController(controller!);
-                pull = controller?.findInput("pull");
-                advance = controller?.findInput("advance");
+                pull = controller!.findInput<double>('pull') as SMINumber;
+                advance = controller!.findInput<bool>('advance') as SMITrigger;
               },
             ): const SizedBox.shrink()
         );
