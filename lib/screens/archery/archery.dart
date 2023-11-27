@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:rive_flutter/screens/pull_to_refresh/archery_header.dart';
 
-class PullToRefreshScreen extends StatefulWidget {
-  const PullToRefreshScreen({Key? key}) : super(key: key);
+import 'archery_header.dart';
+
+
+class ArcheryScreen extends StatefulWidget {
+  const ArcheryScreen({Key? key}) : super(key: key);
 
   @override
-  State<PullToRefreshScreen> createState() => _PullToRefreshScreenState();
+  State<ArcheryScreen> createState() => _ArcheryScreenState();
 }
 
-class _PullToRefreshScreenState extends State<PullToRefreshScreen> {
+class _ArcheryScreenState extends State<ArcheryScreen> {
   final RefreshController refreshController = RefreshController();
 
   @override
