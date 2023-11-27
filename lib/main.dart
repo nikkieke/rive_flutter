@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rive_flutter/screens/home/home.dart';
 import 'screens/screens.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
       ),
         debugShowCheckedModeBanner: false,
-        home: const PullToRefreshScreen()
+        home: const HomeScreen()
     );
   }
 }
