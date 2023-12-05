@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'archery_header.dart';
+import 'daily_progress_card.dart';
 
 
 class ArcheryScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class ArcheryScreen extends StatefulWidget {
 
 class _ArcheryScreenState extends State<ArcheryScreen> {
   final RefreshController refreshController = RefreshController();
+  int number = 8;
 
   @override
   void dispose() {
@@ -20,10 +22,19 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
     super.dispose();
   }
 
+  void incrementItem(){
+    setState(() {
+      number++;
+      dP.add(DailyProgress(title: 'Day ${number.toString()}'));
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       body: SmartRefresher(
         controller: refreshController,
         enablePullDown: true,
@@ -32,6 +43,8 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
           await Future.delayed(
               const Duration(seconds: 2),(){
           });
+          incrementItem();
+
           if (!mounted) {
             return;
           }
@@ -40,31 +53,26 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
         child: CustomScrollView(
           slivers: [
             const SliverAppBar(
-              title: Text('Shooting practice'),
+              title: Text('Fitness Targets'),
               pinned: true,
             ),
-            SliverList(delegate: SliverChildListDelegate(buildList()))
+            SliverList(delegate:
+            SliverChildBuilderDelegate(
+                (context, index){
+                  final reversedDp = dP.reversed.toList();
+                  final dailyProgress = reversedDp[index];
+                  return DailyProgressCard(model: dailyProgress,);
+                },
+                childCount: dP.length,
+              )
+            )
           ],
         ),
       ),
     );
   }
-
-  List<Widget> buildList() {
-    return List.generate(
-        13,
-            (index) => Container(
-          height: 100,
-          margin: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 15,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ));
-  }
 }
+
+
 
 
