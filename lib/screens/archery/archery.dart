@@ -1,6 +1,5 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import 'archery_header.dart';
 import 'daily_progress_card.dart';
 
@@ -13,12 +12,20 @@ class ArcheryScreen extends StatefulWidget {
 }
 
 class _ArcheryScreenState extends State<ArcheryScreen> {
-  final RefreshController refreshController = RefreshController();
+  late EasyRefreshController controller;
   int number = 8;
 
   @override
+  void initState() {
+    controller = EasyRefreshController(
+      controlFinishRefresh: true,
+    );
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    refreshController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -36,10 +43,12 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
-        child: SmartRefresher(
-          controller: refreshController,
-          enablePullDown: true,
-          header: ArcheryHeader(refreshController: refreshController),
+        child: EasyRefresh(
+          controller: controller,
+          header: const ArcheryHeader(
+            position: IndicatorPosition.locator,
+            processedDuration: Duration(seconds: 1),
+          ),
           onRefresh: () async {
             await Future.delayed(
                 const Duration(seconds: 2),(){
@@ -49,7 +58,7 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
             if (!mounted) {
               return;
             }
-            refreshController.refreshCompleted();
+            controller.finishRefresh();
           },
           child: CustomScrollView(
             slivers: [
@@ -57,6 +66,7 @@ class _ArcheryScreenState extends State<ArcheryScreen> {
                 title: Text('Fitness Targets'),
                 pinned: true,
               ),
+              const HeaderLocator.sliver(),
               SliverList(delegate:
               SliverChildBuilderDelegate(
                   (context, index){
