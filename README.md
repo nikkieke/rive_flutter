@@ -2,6 +2,11 @@
 
 A compliation of components animated in rive and integrated into Flutter. Showcasing the beauty of animation interactivity in mobile applications.
 
+## Rive Animations Credits
+- Tree Animation by @JcToon
+- Icon Animation by @DrawsGood
+- Archery Animation by @DrawsGood
+
 
 ## Rive animations in Flutter
 
