@@ -8,6 +8,7 @@ A compliation of components animated in rive and integrated into Flutter. Showca
 - Archery Animation by @DrawsGood
 
 
+
 ## Rive animations in Flutter
 
 <table>
