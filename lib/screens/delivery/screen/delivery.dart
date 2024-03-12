@@ -9,8 +9,10 @@ class DeliveryScreen extends StatefulWidget {
 }
 
 class _DeliveryScreenState extends State<DeliveryScreen> {
-  /// rive controller and input values
+  /// rive controller
   StateMachineController? controller;
+
+  /// input values
   SMINumber? state;
   SMITrigger? isPressed;
 
