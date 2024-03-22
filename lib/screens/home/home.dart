@@ -60,6 +60,14 @@ class SideDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder:(context)=> const DeliveryScreen()));
                       }
                   ),
+                  ListTile(
+                      leading: const Icon(Icons.arrow_drop_down_circle_outlined),
+                      title: const Text("Star Rating",style: TextStyle(
+                          color: Colors.white,  fontSize: 15)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=> const StarRatingScreen()));
+                      }
+                  ),
 
                 ]
             )
