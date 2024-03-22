@@ -40,10 +40,10 @@ class _StarRatingScreenState extends State<StarRatingScreen> {
           },
           child: SizedBox(
             height: 200,
-            width: 300,
+            width: 400,
             child:  RiveAnimation.asset(
-                artboard: 'star-artboard',
-                'assets/rive_assets/rating1.riv',
+                artboard: 'star-rating-artboard',
+                'assets/rive_assets/rating2.riv',
               stateMachines: const ["State Machine 1"],
               onInit: (artboard) {
                 controller = StateMachineController.fromArtboard(
