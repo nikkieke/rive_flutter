@@ -15,6 +15,13 @@ class _StarRatingScreenState extends State<StarRatingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:  const Text("Rate our service!",style: TextStyle(
+            color: Colors.white,  fontSize: 30)),
+        centerTitle: true,
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: Center(
         child: GestureDetector(
           onTap: (){
@@ -39,8 +46,8 @@ class _StarRatingScreenState extends State<StarRatingScreen> {
             }
           },
           child: SizedBox(
-            height: 200,
-            width: 400,
+            height: 400,
+            width: 600,
             child:  RiveAnimation.asset(
                 artboard: 'star-rating-artboard',
                 'assets/rive_assets/rating2.riv',

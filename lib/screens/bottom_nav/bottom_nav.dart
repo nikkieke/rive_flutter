@@ -33,6 +33,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
 
     return  Scaffold(
+      appBar: AppBar(),
       //backgroundColor: const Color(0xff769fe4),
       body: ValueListenableBuilder(
           valueListenable: tabNotifier.currentIndex,

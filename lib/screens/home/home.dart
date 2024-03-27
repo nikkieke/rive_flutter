@@ -7,8 +7,93 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title:  const Text("Rive x Flutter",style: TextStyle(
+            color: Colors.white,  fontSize: 30)),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       drawer: const SideDrawer(),
+      body: Expanded(
+        child: ListView(
+            shrinkWrap: false,
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Options(title: 'Archery Pull to refresh',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> const ArcheryScreen()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Options(title: 'Tree Planting Timer',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> const  TreePlantingScreen()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Options(title: 'Bottom Nav Icons',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> const BottomNav()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Options(title: 'Delivery tracker',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> const DeliveryScreen()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Options(title: 'Star Rating',
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=> const StarRatingScreen()));
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+        ),
+      )
+    );
+  }
+}
+
+class Options extends StatelessWidget {
+  const Options({
+    super.key, required this.title, required this.onTap,
+  });
+
+  final String title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 100,
+        width: 200,
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(left: 50, right: 50),
+        decoration:  BoxDecoration(
+          color: Colors.blue.shade800,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+        ),
+        child:  Text(title,style: const TextStyle(
+            color: Colors.white,  fontSize: 17)),
+      ),
     );
   }
 }

@@ -19,6 +19,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: TextButton(
           onPressed: (){
@@ -27,15 +28,18 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
         builder: (BuildContext context) {
           return Container(
             alignment: Alignment.topCenter,
-            height: 200,
-            color: Colors.black12,
+            height: 250,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
             width: double.maxFinite,
             child: GestureDetector(
               onTap: (){
                 isPressed?.fire();
               },
               child: SizedBox(
-                height: 150,
+                height: 200,
                 child: RiveAnimation.asset(
                 'assets/rive_assets/delivery_demo.riv',
                 fit: BoxFit.cover,
@@ -58,8 +62,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
           );
         },
       );
-
-          },
+      },
           child: Container(
             alignment: Alignment.center,
             height: 70,
