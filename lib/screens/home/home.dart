@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rive_flutter/screens/screens.dart';
+import 'package:rive_flutter/widgets/options.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -82,36 +83,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ));
-  }
-}
-
-class Options extends StatelessWidget {
-  const Options({
-    super.key,
-    required this.title,
-    required this.onTap,
-  });
-
-  final String title;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 100,
-        width: 200,
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(left: 50, right: 50),
-        decoration: BoxDecoration(
-          color: Colors.blue.shade800,
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Text(title,
-            style: const TextStyle(color: Colors.white, fontSize: 17)),
-      ),
-    );
   }
 }
 
