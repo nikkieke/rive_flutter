@@ -45,17 +45,14 @@ class _EventsSampleState extends State<EventsSample> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 50,
-                  width: double.maxFinite,
-                  child: Text(
-                    showText ? 'Welcome to the Flutterbytes Conference' : '',
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.jost(
-                      textStyle:
-                          const TextStyle(color: Colors.white, fontSize: 40),
-                    ),
+                Text(
+                  showText ? 'Welcome to the Flutterbytes Conference' : '',
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.jost(
+                    textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.05),
                   ),
                 ),
                 GestureDetector(
