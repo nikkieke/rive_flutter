@@ -2,7 +2,6 @@
 
 A compliation of components animated in rive and integrated into Flutter. Showcasing the beauty of animation interactivity in mobile applications.
 
-🚀 Interact with it directly, live on https://nikkieke.github.io/rive_flutter_deploy/
 
 ## Rive Animations Credits
 - Tree Animation by @JcToon
