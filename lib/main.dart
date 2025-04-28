@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rive_flutter/f_demo/home_screen.dart';
+import 'package:rive_flutter/new_rive/animated_fab.dart';
+import 'package:rive_native/rive_native.dart' as rive;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await rive.RiveNative.init();
   runApp(const MyApp());
 }
 
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         //home: const HomeScreen()
-        home: const DemoHome());
+        //home: const DemoHome());
+        home: const AnimatedFab());
   }
 }
