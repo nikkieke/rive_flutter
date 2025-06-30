@@ -332,10 +332,10 @@ packages:
     dependency: "direct main"
     description:
       name: rive_native
-      sha256: "8b52aaa2c3b5607c447dfea1e117e45e3fe585c3cda4a014c09669c1f142cb67"
+      sha256: "97d3fd0c7a4e78b3227a5703841b9455da40632fc8abe1e66cc40ea3d3d9889c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1-dev.8"
+    version: "0.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
