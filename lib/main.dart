@@ -25,5 +25,6 @@ class MyApp extends StatelessWidget {
         //home: const DemoHome());
         //home: const AnimatedFab());
         home: const SegmentedSlider());
+    //home: const TestPage());
   }
 }
